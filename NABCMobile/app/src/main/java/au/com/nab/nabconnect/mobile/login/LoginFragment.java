@@ -1,35 +1,37 @@
 package au.com.nab.nabconnect.mobile.login;
 
-import android.content.Context;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 
+import org.androidannotations.annotations.Click;
+import org.androidannotations.annotations.EFragment;
+import org.androidannotations.annotations.ViewById;
+
+import au.com.nab.nabconnect.mobile.MainActivity_;
 import au.com.nab.nabconnect.mobile.R;
 
-
+@EFragment(value = R.layout.login_fragment)
 public class LoginFragment extends Fragment {
 
+    @ViewById(R.id.username)
+    EditText username;
 
-    public LoginFragment() {
-        // Required empty public constructor
+    @ViewById(R.id.password)
+    EditText password;
+
+    @Click(R.id.login_button)
+    public void login() {
+        System.out.println("Login button click");
+        MainActivity_ mainActivity = (MainActivity_) getActivity();
+        mainActivity.doLogin(username.getText().toString(), password.getText().toString());
+
+
     }
 
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
-    }
-
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.login_fragment, container, false);
-    }
 
 
 }

@@ -22,7 +22,7 @@
         android:layout_height="wrap_content"
         android:id="@+id/username"
         android:hint="Username"
-        android:text="6206777991"
+        android:text="6206682710"
         android:layout_marginTop="10dp"
         android:layout_marginBottom="10dp" />
 
@@ -33,7 +33,7 @@
         android:ems="10"
         android:id="@+id/password"
         android:hint="Password"
-        android:text="passw123"
+        android:text="nabnab!22"
         android:layout_marginTop="10dp"
         android:layout_marginBottom="10dp" />
 
@@ -41,8 +41,7 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:text="Login"
-        android:id="@+id/submit"
-        android:onClick="doLogin"
+        android:id="@+id/login_button"
         android:background="#010101"
         android:textColor="#ffffff"
         android:layout_marginTop="10dp"

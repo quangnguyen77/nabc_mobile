@@ -5,20 +5,21 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 
 import org.androidannotations.annotations.Background;
 import org.androidannotations.annotations.Bean;
 import org.androidannotations.annotations.EActivity;
 
-import au.com.nab.nabconnect.mobile.login.LoginFragment;
+import au.com.nab.nabconnect.mobile.login.LoginFragment_;
+import au.com.nab.nabconnect.sdk.filter.PaymentFilter;
+import au.com.nab.nabconnect.sdk.response.PaymentsResponse;
+import au.com.nab.nabconnect.sdk.response.SDKResponse;
 
 @EActivity
 public class MainActivity extends AppCompatActivity {
 
     @Bean
     NabConnectManager nabConnectManager;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,12 +64,15 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void showLogin() {
-        getSupportFragmentManager().beginTransaction().replace(R.id.content_container, new LoginFragment()).commit();
+        getSupportFragmentManager().beginTransaction().replace(R.id.content_container, LoginFragment_.builder().build()).commit();
     }
 
     @Background
-    public void doLogin(View view) {
-        System.out.println("Login pressed");
-        nabConnectManager.getNabConnectApi().login("abc","def");
+    public void doLogin(String username, String password) {
+        SDKResponse response = nabConnectManager.getNabConnectApi().login(username, password);
+        System.out.println("Login response " + response);
+        // show payment fragment
+        PaymentsResponse paymentsResponse = nabConnectManager.getNabConnectApi().getPayments(new PaymentFilter());
+        System.out.println("Payment size " + paymentsResponse.getPaymentList().getTotalRecords());
     }
 }

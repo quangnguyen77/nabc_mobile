@@ -10,8 +10,10 @@ import java.security.SecureRandom;
 import java.security.cert.CertificateException;
 import java.security.cert.X509Certificate;
 
+import javax.net.ssl.HostnameVerifier;
 import javax.net.ssl.HttpsURLConnection;
 import javax.net.ssl.SSLContext;
+import javax.net.ssl.SSLSession;
 import javax.net.ssl.X509TrustManager;
 
 /**
@@ -35,10 +37,18 @@ public class NabConnectClientHttpRequestFactory extends SimpleClientHttpRequestF
 
     @Override
     protected void prepareConnection(HttpURLConnection connection, String httpMethod) throws IOException {
+        super.prepareConnection(connection, httpMethod);
         if (connection instanceof HttpsURLConnection) {
+            ((HttpsURLConnection) connection).setHostnameVerifier(new HostnameVerifier() {
+                public boolean verify(String hostname, SSLSession session) {
+                    return true;
+                }
+            });
             ((HttpsURLConnection) connection).setSSLSocketFactory(initSSLContext().getSocketFactory());
         }
-        super.prepareConnection(connection, httpMethod);
+        // we will follow redirect even when we POST so that login can work
+        connection.setInstanceFollowRedirects(true);
+
     }
 
     /**

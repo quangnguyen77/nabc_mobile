@@ -5,7 +5,7 @@ package au.com.nab.nabconnect.sdk.response;
  */
 public class SDKResponse {
     public enum ResponseCode {
-        SUCCESS(0), SYSTEM_ERROR(1), NETWORK_ERROR(2);
+        SUCCESS(0), SYSTEM_ERROR(1), NETWORK_ERROR(2), SUCCESS_WITH_BROADCAST(3);
 
         private int value;
         private ResponseCode(int value) {
@@ -38,5 +38,13 @@ public class SDKResponse {
 
     public void setMessage(String message) {
         this.message = message;
+    }
+
+    @Override
+    public String toString() {
+        return "SDKResponse{" +
+                "responseCode=" + responseCode +
+                ", message='" + message + '\'' +
+                '}';
     }
 }
